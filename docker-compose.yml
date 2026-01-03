@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  # Service 1: The Database
+  db:
+    image: postgres:13-alpine
+    container_name: weather_db_container
+    # Load variables from .env file automatically
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  # Service 2: Your Python App
+  app:
+    build: .
+    container_name: weather_app_container
+    depends_on:
+      - db
+    # Load variables from .env so config.py can read them
+    env_file:
+      - .env
+    environment:
+      - DB_HOST=db  # Tells Python to connect to the 'db' service above
+    volumes:
+      - ./:/app     # Syncs your code so you can edit files without rebuilding
+
+volumes:
+  postgres_data:

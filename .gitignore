@@ -1,0 +1,25 @@
+# Ignore Python virtual environments
+venv/
+env/
+__pycache__/
+*.pyc
+
+# Ignore Mac/Windows system files
+.DS_Store
+
+# Ignore Airflow logs and temp files
+logs/
+airflow_orchestration/logs/
+airflow_orchestration/tmp/
+standalone_admin_password.txt
+webserver_config.py
+
+# Ignore dbt internal files
+dbt_packages/
+target/
+dbt_modules/
+
+# SECURITY: Ignore files with passwords!
+# We will ignore the profiles.yml because it has your DB password
+**/profiles.yml
+.env
